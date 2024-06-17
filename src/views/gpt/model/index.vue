@@ -35,6 +35,12 @@
       <el-table v-loading="loading" :data="modelList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="主键" align="center" prop="id" v-if="false" />
+        <el-table-column label="类型" align="center" prop="type">
+          <template #default="scope">
+            <el-text v-if="scope.row.type === 1">文字</el-text>
+            <el-text v-if="scope.row.type === 2">图像</el-text>
+          </template>
+        </el-table-column>
         <el-table-column label="名称" align="center" prop="name" />
         <el-table-column label="图标" align="center" prop="icon">
           <template #default="scope">
@@ -59,6 +65,12 @@
     <!-- 添加或修改模型信息对话框 -->
     <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
       <el-form ref="modelFormRef" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="类型" prop="type">
+          <el-select v-model="form.type" placeholder="请选择类型">
+            <el-option label="文字" :value="1"></el-option>
+            <el-option label="图像" :value="2"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称" />
         </el-form-item>
@@ -124,6 +136,9 @@ const data = reactive<PageData<ModelForm, ModelQuery>>({
   rules: {
     id: [
       { required: true, message: "主键不能为空", trigger: "blur" }
+    ],
+    type: [
+      { required: true, message: "类型不能为空", trigger: "blur" }
     ],
     name: [
       { required: true, message: "名称不能为空", trigger: "blur" }

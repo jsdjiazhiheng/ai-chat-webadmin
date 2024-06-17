@@ -5,6 +5,11 @@ export interface ModelVO {
   id: string | number;
 
   /**
+   * 类型
+   */
+  type?: number;
+
+  /**
    * 名称
    */
   name: string;
@@ -30,6 +35,11 @@ export interface ModelForm extends BaseEntity {
    * 主键
    */
   id?: string | number;
+
+  /**
+   * 类型
+   */
+  type?: number;
 
   /**
    * 名称
